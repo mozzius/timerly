@@ -8,10 +8,10 @@
   "author": "Samuel Newman <mozzius@protonmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"nodemon server/server.js\" \"cd timerly-app && yarn start\"",
+    "dev": "concurrently \"nodemon server/server.js --ignore 'timerly-app/'\" \"cd timerly-app && yarn start\"",
     "format": "prettier --write timerly-app/src/ server/",
-    "postinstall": "yarn && yarn --cwd ~/timerly-app/",
-    "build": "cd timerly-app && yarn --cwd ~/timerly-app/ build",
+    "postinstall": "cd timerly-app && yarn",
+    "build": "cd timerly-app && yarn build",
     "start": "node server/server.js"
   },
   "devDependencies": {
