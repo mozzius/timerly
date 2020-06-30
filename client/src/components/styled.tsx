@@ -1,13 +1,20 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  padding: 8px;
+  height: 40px;
+  max-height: ${(props) => (props.hidden ? 0 : 40)}px;
+
+  padding: 0 8px;
 
   font-size: 16px;
   font-family: inherit;
 
   border: 2px solid #eee;
   border-radius: 5px;
+
+  overflow: hidden;
+
+  transition: max-height 1s ease;
 
   &:hover,
   &:focus {

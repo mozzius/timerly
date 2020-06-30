@@ -1,37 +1,63 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
-import * as Api from './api';
-import LandingPage from './pages/LandingPage';
+import SigninPage from './pages/SigninPage';
+import PrivateRoute from './components/PrivateRoute';
+import Dashboard from './pages/Dashboard';
 
 export type User = {
+  jwt: string;
   username: string;
   id: string;
 };
 
+export const userContext = React.createContext<User | null>(null);
+
 const App: React.FC = () => {
   const [user, setUser] = React.useState<User | null>(null);
 
-  const authenticate = async (username: string, password: string) => {
-    const user = await Api.get('auth', 'POST', { username, password });
-    if (user !== null) {
-      setUser(user);
-      return true;
-    } else {
-      return false;
+  // get jwt
+  React.useEffect(() => {
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      setUser(JSON.parse(stored));
     }
-  };
+  }, []);
 
-  if (user === null) return <LandingPage auth={authenticate} />;
+  const strUser = JSON.stringify(user);
+
+  // set jwt
+  React.useEffect(() => {
+    if (strUser !== 'null') {
+      localStorage.setItem('user', strUser);
+    }
+  }, [strUser]);
 
   return (
-    <Router>
-      <Switch>
-        <Route>
-          <p>Hello World</p>
-        </Route>
-      </Switch>
-    </Router>
+    <userContext.Provider value={user}>
+      <Router>
+        <Switch>
+          <Route
+            path="/signout"
+            render={() => {
+              setUser(null);
+              return <Redirect to="/" />;
+            }}
+          />
+          <PrivateRoute path="/dashboard">
+            <Dashboard />
+          </PrivateRoute>
+          <Route exact path="/">
+            <SigninPage setUser={setUser} />
+          </Route>
+        </Switch>
+      </Router>
+    </userContext.Provider>
   );
 };
 
