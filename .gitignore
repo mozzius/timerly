@@ -6,10 +6,10 @@ node_modules/
 .pnp.js
 
 # testing
-/timerly-app/coverage
+/client/coverage
 
 # production
-/timerly-app/build
+/client/build
 
 # misc
 .DS_Store

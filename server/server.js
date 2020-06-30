@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'timerly-app/build')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.post('/api/auth', (req, res) => {
   try {
@@ -21,6 +21,10 @@ app.post('/api/auth', (req, res) => {
   } catch (e) {
     res.sendStatus(401);
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 const port = process.env.PORT || 8080;
