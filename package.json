@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "concurrently \"nodemon server/server.js\" \"cd timerly-app && yarn start\"",
     "format": "prettier --write timerly-app/src/ server/",
-    "build": "cd timerly-app && yarn build",
+    "postinstall": "yarn && yarn --cwd ~/timerly-app/",
+    "build": "cd timerly-app && yarn --cwd ~/timerly-app/ build",
     "start": "node server/server.js"
   },
   "devDependencies": {
@@ -19,7 +20,6 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "react-scripts": "^3.4.1"
+    "express": "^4.17.1"
   }
 }
