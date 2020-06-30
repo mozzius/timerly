@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently \"nodemon server/server.js\" \"cd timerly-app && yarn start\"",
-    "format": "prettier --write timerly-app/src/ server/"
+    "format": "prettier --write timerly-app/src/ server/",
+    "build": "cd timerly-app && yarn build",
+    "start": "node server/server.js"
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.0",
