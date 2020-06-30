@@ -1,0 +1,20 @@
+{
+  "name": "timerly",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Samuel Newman <mozzius@protonmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"nodemon server/server.js\" \"cd timerly-app && yarn start\"",
+    "format": "prettier --write timerly-app/src/ server/"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.0",
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
