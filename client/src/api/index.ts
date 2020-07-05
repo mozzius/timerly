@@ -4,11 +4,20 @@ export type RequestData = {
 };
 
 export const get = async (url: string, method: 'GET' | 'POST', body?: any) => {
+  let JWT = {};
+  const user = localStorage.getItem('user');
+  if (user) {
+    JWT = {
+      Authorization: `Bearer ${JSON.parse(user).jwt}`,
+    };
+  }
+
   try {
     const res = await fetch(`/api/${url}`, {
       method,
       body: JSON.stringify(body),
       headers: {
+        ...JWT,
         'Content-Type': 'application/json',
       },
     });

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import * as API from '../api';
 import { Form, Input } from '../components/styled';
 
-import { User } from '../App';
-import { useHistory, useLocation } from 'react-router-dom';
+import { User, userContext } from '../App';
+import { Redirect } from 'react-router-dom';
 
 const Error = styled.p`
   transition: opacity 0.2s ease;
@@ -82,8 +82,9 @@ const SigninPage: React.SFC<SigninPageProps> = ({ setUser }) => {
   const [email, setEmail] = React.useState<string>('');
   const [isSignin, setIsSignin] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string>('');
-  const history = useHistory();
-  const location = useLocation();
+  const user = React.useContext(userContext);
+
+  if (user) return <Redirect to="/dashboard" />;
 
   return (
     <Container>
@@ -143,10 +144,6 @@ const SigninPage: React.SFC<SigninPageProps> = ({ setUser }) => {
                   id: res.data.message.id,
                   username: res.data.message.username,
                 });
-                const { from } = (location.state as any) || {
-                  from: { pathname: '/dashboard' },
-                };
-                history.push(from);
               } else if (res.success && res.data) {
                 setError(res.data.message);
               } else {

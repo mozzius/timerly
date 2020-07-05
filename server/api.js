@@ -4,6 +4,7 @@ const SQL = require('sql-template-strings');
 
 const { makeQuery } = require('./db');
 const { hash } = require('./utils');
+const { route } = require('./server');
 
 // set secret key
 const secret = process.env.SECRET;
@@ -79,6 +80,11 @@ router.post('/signup', async (req, res) => {
     console.error(err);
     res.status(401).json({ success: false, message: err });
   }
+});
+
+// for checking jwt is valid
+router.get('/auth', (_, res) => {
+  res.json({ success: true });
 });
 
 module.exports = router;
